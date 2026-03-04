@@ -1,0 +1,7 @@
+{
+  "latitude": 28.6139,
+  "longitude": 77.2090,
+  "start_date": "2020-01-01",
+  "database_path": "output/sunrise_sunset.db",
+  "table_name": "sun_events"
+}

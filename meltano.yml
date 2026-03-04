@@ -1,0 +1,32 @@
+default_environment: dev
+project_id: 019cb53c-f56a-760e-a2dc-2bcba6796a3c
+
+environments:
+  - name: dev
+  - name: staging
+  - name: prod
+
+plugins:
+  extractors:
+    - name: tap-sunrise-sunset
+      namespace: tap_sunrise_sunset
+      executable: python -m tap_sunrise_sunset.tap_sunrise_sunset
+      pip_url: -r requirements.txt
+      config:
+        # You can point this to a project-level config if desired
+        # For local runs, prefer using `--config config.json`
+        latitude: 28.6139
+        longitude: 77.2090
+        start_date: 2020-01-01
+
+  loaders:
+    - name: target-sqlite
+      namespace: target_sqlite
+      pip_url: target-sqlite
+      config:
+        database: output/sunrise_sunset.db
+
+jobs:
+  - name: daily-sun-events-to-sqlite
+    tasks:
+      - tap-sunrise-sunset target-sqlite
